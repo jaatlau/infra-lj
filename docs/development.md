@@ -54,14 +54,7 @@
    }
    ```
 
-7. **Generate documentation**:
-   ```bash
-   cd modules/my-resource
-   export PATH=$PATH:~/bin
-   terraform-docs markdown table --output-file README.md .
-   ```
-
-8. **Add module to root main.tf**:
+7. **Add module to root main.tf**:
    ```hcl
    module "my_resource" {
      source      = "./modules/my-resource"
@@ -69,7 +62,7 @@
    }
    ```
 
-9. **Add root outputs**:
+8. **Add root outputs**:
    ```hcl
    output "my_resource_id" {
      value = module.my_resource.resource_id
