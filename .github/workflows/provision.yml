@@ -76,9 +76,9 @@ jobs:
       - name: Fetch terraform token from Doppler
         id: fetch_tf_token
         run: |
-          TERRAFORM_CLOUD_TOKEN=$(doppler secrets get TERRAFORM_CLOUD_TOKEN --plain)
-          echo "::add-mask::$TERRAFORM_CLOUD_TOKEN"
-          echo "TERRAFORM_CLOUD_TOKEN=$TERRAFORM_CLOUD_TOKEN" >> $GITHUB_OUTPUT
+          TF_API_TOKEN=$(doppler secrets get TF_API_TOKEN --plain)
+          echo "::add-mask::$TF_API_TOKEN"
+          echo "TERRAFORM_CLOUD_TOKEN=$TF_API_TOKEN" >> $GITHUB_OUTPUT
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2
