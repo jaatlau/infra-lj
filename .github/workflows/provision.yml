@@ -91,17 +91,17 @@ jobs:
 
       # Initialize Terraform for remote execution
       - name: Terraform Init
-        run: doppler run -- terraform -chdir=terraform init
+        run: doppler run -- terraform init
         env:
           DOPPLER_TOKEN: ${{ steps.select_doppler_token.outputs.DOPPLER_TOKEN }}
 
       - name: Terraform Plan
-        run: doppler run -- terraform -chdir=terraform plan
+        run: doppler run -- terraform plan
         env:
           DOPPLER_TOKEN: ${{ steps.select_doppler_token.outputs.DOPPLER_TOKEN }}
 
       - name: Terraform Apply
-        run: doppler run -- terraform -chdir=terraform apply -auto-approve
+        run: doppler run -- terraform apply -auto-approve
         env:
           DOPPLER_TOKEN: ${{ steps.select_doppler_token.outputs.DOPPLER_TOKEN }}
       
