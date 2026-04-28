@@ -31,11 +31,16 @@ Trigger the provision workflow from GitHub Actions:
 Use GitHub UI: Actions → Provision Infra → Run workflow
 ```
 
+###5. After Deployment
+- Any resources' (like cloud servers) bootstrap scripts and details can be found under the same module where the resource is created.
+- So after deployment there might be some manual bootstrap scripts to run. (maybe automated later)
+
+
 ## How It Works
 
 1. **Developer** manually triggers the provision workflow
 2. **GitHub Actions** runs the provision.yml workflow
-3. **Doppler CLI** injects secrets into the environment
+3. **Doppler CLI** injects secrets into the environment at runtime
 4. **Terraform** uses those secrets to authenticate with Terraform Cloud
 5. **Resources** are provisioned and state is stored in Terraform Cloud
 

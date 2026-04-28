@@ -1,21 +1,28 @@
-
-
 # Providers
 
-provider "aws" {
-  region     = var.AWS_REGION
-  access_key = var.AWS_ACCESS_KEY
-  secret_key = var.AWS_SECRET_ACCESS_KEY
+provider "hcloud" {
+  token = var.HETZNER_TOKEN
 }
 
+# Server
+module "data-platform-server" {
+  source      = "./modules/server/hetzner"
+  ENVIRONMENT  = var.ENVIRONMENT
+  HETZNER_MAIN_SERVER_LOCATION  = var.HETZNER_MAIN_SERVER_LOCATION
+  HETZNER_MAIN_SERVER_IMAGE = var.HETZNER_MAIN_SERVER_IMAGE
+  HETZNER_MAIN_SERVER_TYPE = var.HETZNER_MAIN_SERVER_TYPE
+}
 
-# storage
+# Security - firewall
+module "data-platform-firewall-rule" {
+  source      = "./modules/security/firewall/hetzner"
+  ENVIRONMENT  = var.ENVIRONMENT
+  MY_IP = var.MY_IP
+}
 
-module "data-platform-bucket" {
-  source      = "./modules/storage/s3"
-  AWS_BUCKET  = var.AWS_BUCKET
+# Security - ssh
+module "data-platform-ssh" {
+  source      = "./modules/security/ssh/hetzner"
+  HETZNER_SSH_PUBLIC_KEY  = var.HETZNER_SSH_PUBLIC_KEY
   ENVIRONMENT = var.ENVIRONMENT
-  AWS_IAM_USER_DEPLOYER = var.AWS_IAM_USER_DEPLOYER
 }
-
-
