@@ -2,7 +2,7 @@
 
 ## Overview
 
-This repository serves as the **infrastructure provider** for the organization. It provisions core AWS resources that other repositories consume via Terraform state outputs (Model A architecture).
+This repository serves as the **infrastructure provider** for the organization. It provisions core resources for downstream services to consume.
 
 - This repo **creates and manages** actual infrastructure
 - Single source of truth for infrastructure state
@@ -40,7 +40,7 @@ This ensures:
 - **vpc/**: VPC, subnets, security groups, internet gateways
 - **compute/**: EC2 instances, auto-scaling groups, launch templates
 - **storage/s3/**: S3 bucket resources
-- **iam/**: IAM roles and policies
+- **security/iam/**: IAM roles and policies
 
 ### Module Design Principles
 
@@ -55,7 +55,6 @@ This ensures:
 - **Backend**: Terraform Cloud (remote state)
 - **Locking**: Automatic (prevents concurrent changes)
 - **Encryption**: At rest (Terraform Cloud managed)
-- **State outputs**: Readable by consuming repos
 
 ## Environment Strategy
 

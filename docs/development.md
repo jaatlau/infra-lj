@@ -2,11 +2,11 @@
 
 ## Contributing
 
-1. Create a feature branch from main
+1. Create a feature branch from master
 2. Make changes (add/modify modules or resources)
 3. Commit and push to your branch
 4. Create Pull Request — describe changes
-5. Merge to main after approval
+5. Merge to master after approval
 
 ## Module Development Workflow
 
