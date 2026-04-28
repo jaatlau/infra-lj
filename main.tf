@@ -15,6 +15,7 @@ module "data-platform-bucket" {
   source      = "./modules/storage/s3"
   AWS_BUCKET  = var.AWS_BUCKET
   ENVIRONMENT = var.ENVIRONMENT
+  AWS_IAM_USER_DEPLOYER = var.AWS_IAM_USER_DEPLOYER
 }
 
 
