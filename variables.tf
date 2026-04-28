@@ -26,3 +26,7 @@ variable "AWS_BUCKET" {
   type        = string
 }
 
+variable "AWS_IAM_USER_DEPLOYER" {
+  description = "arn of the user who deploys"
+  type        = string
+}
