@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    hcloud = {
+      source = "hetznercloud/hcloud"
+    }
+  }
+}
+
 resource "hcloud_server" "main_server" {
   name         = "${var.ENVIRONMENT}-main-server"
   location     = var.HETZNER_MAIN_SERVER_LOCATION

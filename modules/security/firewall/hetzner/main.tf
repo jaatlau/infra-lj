@@ -1,3 +1,11 @@
+terraform {
+  required_providers {
+    hcloud = {
+      source = "hetznercloud/hcloud"
+    }
+  }
+}
+
 #ssh local dev machine + tailscale + fastapi access
 resource "hcloud_firewall" "fire_wall_rules" {
   name = "${var.ENVIRONMENT}-fire-wall-rules"
