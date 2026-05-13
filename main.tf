@@ -11,6 +11,8 @@ module "data-platform-server" {
   HETZNER_MAIN_SERVER_LOCATION  = var.HETZNER_MAIN_SERVER_LOCATION
   HETZNER_MAIN_SERVER_IMAGE = var.HETZNER_MAIN_SERVER_IMAGE
   HETZNER_MAIN_SERVER_TYPE = var.HETZNER_MAIN_SERVER_TYPE
+  firewall_ids = [module.data-platform-firewall-rule.firewall_id]
+  ssh_key_ids = [module.data-platform-ssh.ssh_key_id]
 }
 
 # Security - firewall
