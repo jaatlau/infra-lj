@@ -52,9 +52,9 @@ jobs:
           ENV="${{ steps.select_environment.outputs.ENVIRONMENT }}"
 
           if [ "$ENV" == "dev" ]; then
-            TOKEN="${{ secrets.DEBP_DEV_TOKEN }}"
+            TOKEN="${{ secrets.DOPPLER_DEV_TOKEN }}"
           elif [ "$ENV" == "prod" ]; then
-            TOKEN="${{ secrets.DEBP_PROD_TOKEN }}"
+            TOKEN="${{ secrets.DOPPLER_PROD_TOKEN }}"
           else
             echo "❌ Invalid environment '$ENV'; exiting."
             exit 1
