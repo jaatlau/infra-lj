@@ -1,0 +1,106 @@
+name: Destroy Infra
+
+on:
+  workflow_dispatch:
+    inputs:
+      confirm:
+        description: 'Type DESTROY to confirm'
+        required: true
+        type: string
+      environment:
+        description: 'Environment to destroy'
+        required: true
+        type: choice
+        options:
+          - dev
+          - master
+
+jobs:
+  destroy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Verify confirmation
+        run: |
+          if [ "${{ github.event.inputs.confirm }}" != "DESTROY" ]; then
+            echo "❌ Confirmation failed. You must type exactly: DESTROY"
+            exit 1
+          fi
+
+      - name: select environment
+        id: select_environment
+        run: |
+          BRANCH_NAME="${{ github.event.inputs.environment }}"
+          if [ "$BRANCH_NAME" == "master" ]; then
+            ENV="prod"
+          elif [ "$BRANCH_NAME" == "dev" ]; then
+            ENV="$BRANCH_NAME"
+          else
+            echo "Invalid environment for deployment: $BRANCH_NAME"
+            exit 1
+          fi
+          echo "ENVIRONMENT=$ENV" >> $GITHUB_OUTPUT
+          echo "environment is $ENV"
+
+      # Select Doppler token based on environment
+      - name: Select Doppler token
+        id: select_doppler_token
+        run: |
+          ENV="${{ steps.select_environment.outputs.ENVIRONMENT }}"
+
+          if [ "$ENV" == "dev" ]; then
+            TOKEN="${{ secrets.DEBP_DEV_TOKEN }}"
+          elif [ "$ENV" == "prod" ]; then
+            TOKEN="${{ secrets.DEBP_PROD_TOKEN }}"
+          else
+            echo "❌ Invalid environment '$ENV'; exiting."
+            exit 1
+          fi
+
+          echo "::add-mask::$TOKEN"
+          echo "DOPPLER_TOKEN=$TOKEN" >> $GITHUB_OUTPUT
+
+      - name: Install Doppler CLI
+        uses: dopplerhq/cli-action@v3
+      
+      - name: Verify Doppler CLI
+        run: doppler --version
+
+      # Authenticate Doppler CLI
+      - name: Setup Doppler
+        run: doppler setup --token="${{ steps.select_doppler_token.outputs.DOPPLER_TOKEN }}" --no-interactive
+
+      - name: Fetch terraform token from Doppler
+        id: fetch_tf_token
+        run: |
+          TF_API_TOKEN=$(doppler secrets get TF_API_TOKEN --plain)
+          echo "::add-mask::$TF_API_TOKEN"
+          echo "TERRAFORM_CLOUD_TOKEN=$TF_API_TOKEN" >> $GITHUB_OUTPUT
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.13.4
+          cli_config_credentials_token: ${{ steps.fetch_tf_token.outputs.TERRAFORM_CLOUD_TOKEN }}
+      
+      - name: Verify Terraform Setup
+        run: terraform -version
+
+      # Initialize Terraform for remote execution
+      - name: Terraform Init
+        run: doppler run -- terraform init
+        env:
+          DOPPLER_TOKEN: ${{ steps.select_doppler_token.outputs.DOPPLER_TOKEN }}
+
+      - name: Terraform Destroy
+        run: doppler run -- terraform destroy -auto-approve
+        env:
+          DOPPLER_TOKEN: ${{ steps.select_doppler_token.outputs.DOPPLER_TOKEN }}
+      
+      - name: Cleanup complete
+        run: |
+          echo "Resources destroyed successfully"
+          echo "Remember to remove the self-hosted runner from GitHub repo settings if needed"
