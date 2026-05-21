@@ -6,16 +6,15 @@ Uses Terraform Cloud for state management and Doppler for secrets management.
 ## Guidelines
 Each stacks/ subfolder is deployable solution.
 Each solution should have subfolder for version, starting with 1 and increment by 1 when new version is created.
+Each solution points to same global Terraform Cloud organization and organization's default project.
 Each solution should have its own Terraform Cloud workspace for dev and prod environments.
-Each solution points to same global Terraform Cloud organization
 Each solution should have its own Doppler project.
-By default workflow files deploy latest version of the solution. Given version number as input, that version will be deployed.
 
 
 ### Naming conventions
 Terraform Cloud workspace: {solution-name-as-in-subfolder}-{dev/prod}
 Doppler project: {solution-name-as-in-subfolder}
-Github Doppler secret: DOPPLER-{solution-name-as-in-subfolder}-{dev/prod}
+Github Doppler secret: DOPPLER_{solution-name-as-in-subfolder}_{dev/prod} (Github secrets do not accept '-' so we replace any '-' with '_')
 Solution version subfolder: v{version_number}
 
 
@@ -53,8 +52,7 @@ Deployment occurs using provision.yml workflow file.
 Inputs for provision.yml:
 - name of the solution (subfolder) - required
 - environment {dev/prod} - required
-- version number - optional, if not given the latest version will be deployed
-
+- version number - required
 
 ```
 
