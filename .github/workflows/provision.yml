@@ -51,6 +51,7 @@ jobs:
           SOLUTION="${{ steps.select_solution.outputs.SOLUTION }}"
           FORMATTED_SOLUTION="${SOLUTION//-/_}"
           echo "FORMATTED_SOLUTION=$FORMATTED_SOLUTION" >> $GITHUB_OUTPUT
+          echo "Formatted solution name: $FORMATTED_SOLUTION"
 
       - name: select solution version
         id: select_solution_version
