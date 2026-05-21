@@ -50,6 +50,7 @@ jobs:
         run: |
           SOLUTION="${{ steps.select_solution.outputs.SOLUTION }}"
           FORMATTED_SOLUTION="${SOLUTION//-/_}"
+          FORMATTED_SOLUTION="${FORMATTED_SOLUTION^^}"
           echo "FORMATTED_SOLUTION=$FORMATTED_SOLUTION" >> $GITHUB_OUTPUT
           echo "Formatted solution name: $FORMATTED_SOLUTION"
 
@@ -60,22 +61,13 @@ jobs:
           echo "SOLUTION_VERSION=$SOLUTION_VERSION" >> $GITHUB_OUTPUT
           echo "Solution version to be deployed: $SOLUTION_VERSION"
 
-      - name: Resolve Doppler secret name
-        id: resolve_secret
-        env:
-          SECRET_NAME: ${{ format('DOPPLER_{0}_{1}_TOKEN', steps.normalize_solution.outputs.FORMATTED_SOLUTION, steps.select_environment.outputs.ENVIRONMENT == 'dev' && 'DEV' || 'PROD') }}
-        run: |
-          echo "SECRET_NAME=$SECRET_NAME" >> $GITHUB_OUTPUT
-          echo "Resolved secret name: $SECRET_NAME"
-
       - name: Select Doppler token
         id: select_doppler_token
         env:
           DOPPLER_TOKEN: ${{ secrets[ format('DOPPLER_{0}_{1}_TOKEN', steps.normalize_solution.outputs.FORMATTED_SOLUTION, steps.select_environment.outputs.ENVIRONMENT == 'dev' && 'DEV' || 'PROD') ] }}
         run: |
-          #echo "::add-mask::$DOPPLER_TOKEN"
+          echo "::add-mask::$DOPPLER_TOKEN"
           echo "DOPPLER_TOKEN=$DOPPLER_TOKEN" >> $GITHUB_OUTPUT
-          echo "DOPPLER_TOKEN: $DOPPLER_TOKEN"
 
       - name: Install Doppler CLI
         uses: dopplerhq/cli-action@v3
