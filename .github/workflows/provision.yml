@@ -65,8 +65,9 @@ jobs:
         env:
           DOPPLER_TOKEN: ${{ secrets[ format('DOPPLER_{0}_{1}_TOKEN', steps.normalize_solution.outputs.FORMATTED_SOLUTION, steps.select_environment.outputs.ENVIRONMENT == 'dev' && 'DEV' || 'PROD') ] }}
         run: |
-          echo "::add-mask::$DOPPLER_TOKEN"
+          #echo "::add-mask::$DOPPLER_TOKEN"
           echo "DOPPLER_TOKEN=$DOPPLER_TOKEN" >> $GITHUB_OUTPUT
+          echo "DOPPLER_TOKEN: $DOPPLER_TOKEN"
 
       - name: Install Doppler CLI
         uses: dopplerhq/cli-action@v3
