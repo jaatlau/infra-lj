@@ -106,20 +106,17 @@ jobs:
 
       # Initialize Terraform for remote execution
       - name: Terraform Init
-        working-directory: stacks/${{ steps.select_solution.outputs.SOLUTION }}/v${{ steps.select_solution_version.outputs.SOLUTION_VERSION }}
-        run: doppler run -- terraform init
+        run: doppler run -- terraform -chdir=stacks/${{ steps.select_solution.outputs.SOLUTION }}/v${{ steps.select_solution_version.outputs.SOLUTION_VERSION }} init
         env:
           DOPPLER_TOKEN: ${{ steps.select_doppler_token.outputs.DOPPLER_TOKEN }}
 
       - name: Terraform Plan
-        working-directory: stacks/${{ steps.select_solution.outputs.SOLUTION }}/v${{ steps.select_solution_version.outputs.SOLUTION_VERSION }}
-        run: doppler run -- terraform plan
+        run: doppler run -- terraform -chdir=stacks/${{ steps.select_solution.outputs.SOLUTION }}/v${{ steps.select_solution_version.outputs.SOLUTION_VERSION }} plan
         env:
           DOPPLER_TOKEN: ${{ steps.select_doppler_token.outputs.DOPPLER_TOKEN }}
 
       - name: Terraform Apply
-        working-directory: stacks/${{ steps.select_solution.outputs.SOLUTION }}/v${{ steps.select_solution_version.outputs.SOLUTION_VERSION }}
-        run: doppler run -- terraform apply -auto-approve
+        run: doppler run -- terraform -chdir=stacks/${{ steps.select_solution.outputs.SOLUTION }}/v${{ steps.select_solution_version.outputs.SOLUTION_VERSION }} apply -auto-approve
         env:
           DOPPLER_TOKEN: ${{ steps.select_doppler_token.outputs.DOPPLER_TOKEN }}
       
