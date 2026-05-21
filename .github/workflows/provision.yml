@@ -61,6 +61,15 @@ jobs:
           echo "SOLUTION_VERSION=$SOLUTION_VERSION" >> $GITHUB_OUTPUT
           echo "Solution version to be deployed: $SOLUTION_VERSION"
 
+      
+      - name: Resolve Doppler secret name
+        id: resolve_secret
+        env:
+          SECRET_NAME: ${{ format('DOPPLER_{0}_{1}_TOKEN', steps.normalize_solution.outputs.FORMATTED_SOLUTION, steps.select_environment.outputs.ENVIRONMENT == 'dev' && 'DEV' || 'PROD') }}
+        run: |
+          echo "SECRET_NAME=$SECRET_NAME" >> $GITHUB_OUTPUT
+          echo "Resolved secret name: $SECRET_NAME"
+
       - name: Select Doppler token
         id: select_doppler_token
         env:
