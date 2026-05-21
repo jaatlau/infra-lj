@@ -65,7 +65,7 @@ jobs:
       - name: Resolve Doppler secret name
         id: resolve_secret
         env:
-          SECRET_NAME: ${{ format('DOPPLER_{0}_{1}_TOKEN', steps.normalize_solution.outputs.FORMATTED_SOLUTION, steps.select_environment.outputs.ENVIRONMENT == 'dev' && 'DEV' || 'PROD') }}
+          SECRET_NAME: ${{ format('DOPPLER_{0}_{1}', steps.normalize_solution.outputs.FORMATTED_SOLUTION, steps.select_environment.outputs.ENVIRONMENT == 'dev' && 'DEV' || 'PROD') }}
         run: |
           echo "SECRET_NAME=$SECRET_NAME" >> $GITHUB_OUTPUT
           echo "Resolved secret name: $SECRET_NAME"
@@ -73,7 +73,7 @@ jobs:
       - name: Select Doppler token
         id: select_doppler_token
         env:
-          DOPPLER_TOKEN: ${{ secrets[ format('DOPPLER_{0}_{1}_TOKEN', steps.normalize_solution.outputs.FORMATTED_SOLUTION, steps.select_environment.outputs.ENVIRONMENT == 'dev' && 'DEV' || 'PROD') ] }}
+          DOPPLER_TOKEN: ${{ secrets[ format('DOPPLER_{0}_{1}', steps.normalize_solution.outputs.FORMATTED_SOLUTION, steps.select_environment.outputs.ENVIRONMENT == 'dev' && 'DEV' || 'PROD') ] }}
         run: |
           echo "::add-mask::$DOPPLER_TOKEN"
           echo "DOPPLER_TOKEN=$DOPPLER_TOKEN" >> $GITHUB_OUTPUT
