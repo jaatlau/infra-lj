@@ -14,10 +14,6 @@ on:
         description: 'Solution to be provisioned.'
         required: true
         type: string
-      version_number:
-        description: 'Version number for the solution.'
-        required: true
-        type: number
 
 jobs:
   provision:
