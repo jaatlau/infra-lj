@@ -53,14 +53,6 @@ jobs:
           FORMATTED_SOLUTION="${FORMATTED_SOLUTION^^}"
           echo "FORMATTED_SOLUTION=$FORMATTED_SOLUTION" >> $GITHUB_OUTPUT
           echo "Formatted solution name: $FORMATTED_SOLUTION"
-
-      - name: select solution version
-        id: select_solution_version
-        run: |
-          SOLUTION_VERSION="${{ github.event.inputs.version_number }}"
-          echo "SOLUTION_VERSION=$SOLUTION_VERSION" >> $GITHUB_OUTPUT
-          echo "Solution version to be deployed: $SOLUTION_VERSION"
-
       
       - name: Resolve Doppler secret name
         id: resolve_secret
@@ -106,17 +98,17 @@ jobs:
 
       # Initialize Terraform for remote execution
       - name: Terraform Init
-        run: doppler run -- terraform -chdir="stacks/${{ steps.select_solution.outputs.SOLUTION }}/v${{ steps.select_solution_version.outputs.SOLUTION_VERSION }}" init
+        run: doppler run -- terraform -chdir="stacks/${{ steps.select_solution.outputs.SOLUTION }}" init
         env:
           DOPPLER_TOKEN: ${{ steps.select_doppler_token.outputs.DOPPLER_TOKEN }}
 
       - name: Terraform Plan
-        run: doppler run -- terraform -chdir="stacks/${{ steps.select_solution.outputs.SOLUTION }}/v${{ steps.select_solution_version.outputs.SOLUTION_VERSION }}" plan
+        run: doppler run -- terraform -chdir="stacks/${{ steps.select_solution.outputs.SOLUTION }}" plan
         env:
           DOPPLER_TOKEN: ${{ steps.select_doppler_token.outputs.DOPPLER_TOKEN }}
 
       - name: Terraform Apply
-        run: doppler run -- terraform -chdir="stacks/${{ steps.select_solution.outputs.SOLUTION }}/v${{ steps.select_solution_version.outputs.SOLUTION_VERSION }}" apply -auto-approve
+        run: doppler run -- terraform -chdir="stacks/${{ steps.select_solution.outputs.SOLUTION }}" apply -auto-approve
         env:
           DOPPLER_TOKEN: ${{ steps.select_doppler_token.outputs.DOPPLER_TOKEN }}
       

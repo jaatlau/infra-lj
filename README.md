@@ -5,7 +5,6 @@ Uses Terraform Cloud for state management and Doppler for secrets management.
 
 ## Guidelines
 Each stacks/ subfolder is deployable solution.
-Each solution should have subfolder for version, starting with 1 and increment by 1 when new version is created.
 Each solution points to same global Terraform Cloud organization and organization's default project.
 Each solution should have its own Terraform Cloud workspace for dev and prod environments.
 Each solution should have its own Doppler project.
@@ -52,7 +51,6 @@ Deployment occurs using provision.yml workflow file.
 Inputs for provision.yml:
 - name of the solution (subfolder) - required
 - environment {dev/prod} - required
-- version number - required
 
 ```
 
