@@ -106,17 +106,17 @@ jobs:
 
       # Initialize Terraform for remote execution
       - name: Terraform Init
-        run: doppler run -- terraform -chdir="${GITHUB_WORKSPACE}/stacks/${{ steps.select_solution.outputs.SOLUTION }}/v${{ steps.select_solution_version.outputs.SOLUTION_VERSION }}" init
+        run: doppler run -- terraform -chdir="stacks/${{ steps.select_solution.outputs.SOLUTION }}/v${{ steps.select_solution_version.outputs.SOLUTION_VERSION }}" init
         env:
           DOPPLER_TOKEN: ${{ steps.select_doppler_token.outputs.DOPPLER_TOKEN }}
 
       - name: Terraform Plan
-        run: doppler run -- terraform -chdir="${GITHUB_WORKSPACE}/stacks/${{ steps.select_solution.outputs.SOLUTION }}/v${{ steps.select_solution_version.outputs.SOLUTION_VERSION }}" plan
+        run: doppler run -- terraform -chdir="stacks/${{ steps.select_solution.outputs.SOLUTION }}/v${{ steps.select_solution_version.outputs.SOLUTION_VERSION }}" plan
         env:
           DOPPLER_TOKEN: ${{ steps.select_doppler_token.outputs.DOPPLER_TOKEN }}
 
       - name: Terraform Apply
-        run: doppler run -- terraform -chdir="${GITHUB_WORKSPACE}/stacks/${{ steps.select_solution.outputs.SOLUTION }}/v${{ steps.select_solution_version.outputs.SOLUTION_VERSION }}" apply -auto-approve
+        run: doppler run -- terraform -chdir="stacks/${{ steps.select_solution.outputs.SOLUTION }}/v${{ steps.select_solution_version.outputs.SOLUTION_VERSION }}" apply -auto-approve
         env:
           DOPPLER_TOKEN: ${{ steps.select_doppler_token.outputs.DOPPLER_TOKEN }}
       
