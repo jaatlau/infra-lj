@@ -7,6 +7,7 @@ Uses Terraform Cloud for state management and Doppler for secrets management.
 Each stacks/ subfolder is deployable solution.
 Each solution points to same global Terraform Cloud organization and organization's default project.
 Each solution should have its own Terraform Cloud workspace for dev and prod environments.
+When creating Terraform Cloud workspaces, remember to add working directory setting to solution subfolder (e.g. stacks/data-platform), otherwise relative paths to modules sources wont work
 Each solution should have its own Doppler project.
 
 
@@ -40,8 +41,9 @@ Add doppler service tokens to your GitHub repository as secrets
 
 #### 3. Terraform Cloud Setup
 - Create organization in Terraform Cloud and add it to Doppler as TERRAFORM_CLOUD_ORGANIZATION
-- Create workspaces for dev and prod and add them to Doppler as TERRAFORM_CLOUD_WORKSPACE
-- Generate API token and add it to Doppler
+- Create workspaces for solution (dev and prod) and add them to Doppler as TERRAFORM_CLOUD_WORKSPACE
+- For each workspace define working directory of stacks/{solution-name}, so that modules relative paths work properly
+- Generate API token and add it to Doppler (same api token can be used to multiple deployments)
 
 #### 4. Deployment
 Under stacks/ we define verified solutions that can be deployed.
@@ -49,12 +51,9 @@ Each stack subfolder is its own solution.
 Deployment occurs using provision.yml workflow file.
 
 Inputs for provision.yml:
-- name of the solution (subfolder) - required
 - environment {dev/prod} - required
-
+- name of the solution (subfolder) - required
 ```
-
-
 
 
 ## How It Works
@@ -62,22 +61,30 @@ Inputs for provision.yml:
 1. **Developer** manually triggers the provision workflow
 2. **GitHub Actions** runs the provision.yml workflow
 3. **Doppler CLI** injects secrets into the environment at runtime
-4. **Terraform** uses those secrets to authenticate with Terraform Cloud
+4. **Terraform** uses those secrets to authenticate with Terraform Cloud and using any variables required for deployment.
 5. **Resources** are provisioned and state is stored in Terraform Cloud
+
 
 ## Directory Structure
 
 ```
 .
-├── main.tf                      # Root module with provider + resources
-├── versions.tf                  # Terraform Cloud backend config
-├── variables.tf                 # Root variables (from Doppler)
-├── outputs.tf                   # Root outputs for consuming repos
-├── .github/workflows/
-│   ├── provision.yml            # Manual deployment workflow
-│   └── ci.yml                   # Docs generation on push
-└── modules/                     # Reusable modules
-    ├── storage/s3/              # S3 bucket resources
-    ├── compute/                 # Compute resources
-    └── iam/                     # IAM roles
+├── .github/
+│   └── workflows/
+│       └── provision.yml        # Manual deployment workflow
+│       └── destroy.yml          # Manual destroy solution workflow
+├── modules/                     # Reusable, shared modules (2 levels shown)
+│   ├── security/
+│   │   └── firewall/
+│   │       └── main.tf
+│   ├── server/
+│   │   └── hetzner/
+│   │       └── main.tf
+│   └── storage/
+│       └── s3/
+│           └── main.tf
+└── stacks/                      # Deployable stacks
+    └── <solution-name>/
+        ├── main.tf
+        └── variables.tf
 ```
