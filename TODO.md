@@ -1,7 +1,7 @@
 # TODO
 
 # v002
-- [] Check all bootstrap stuff that is required for data platform
+- [] Check all bootstrap stuff that is required for data platform (CONTINUE FROM creating data-platform bootstrap.sh and check chatgippity for automated tailscale script)
 
 # v001
 - [x] destroy solution file, make it work!
