@@ -4,18 +4,17 @@ Central infrastructure repository that provisions and manages global infrastruct
 Uses Terraform Cloud for state management and Doppler for secrets management.
 
 ## Guidelines
-Each stacks/ subfolder is deployable solution.
-Each solution points to same global Terraform Cloud organization and organization's default project.
-Each solution should have its own Terraform Cloud workspace for dev and prod environments.
-When creating Terraform Cloud workspaces, remember to add working directory setting to solution subfolder (e.g. stacks/data-platform), otherwise relative paths to modules sources wont work
-Each solution should have its own Doppler project.
+- Each stacks/ subfolder is deployable solution.
+- Each solution points to same global Terraform Cloud organization and organization's default project.
+- Each solution should have its own Terraform Cloud workspace for dev and prod environments.
+- When creating Terraform Cloud workspaces, remember to add working directory setting to solution subfolder (e.g. stacks/data-platform), otherwise relative paths to modules sources wont work
+- Each solution should have its own Doppler project.
 
 
 ### Naming conventions
-Terraform Cloud workspace: {solution-name-as-in-subfolder}-{dev/prod}
-Doppler project: {solution-name-as-in-subfolder}
-Github Doppler secret: DOPPLER_{solution-name-as-in-subfolder}_{dev/prod} (Github secrets do not accept '-' so we replace any '-' with '_')
-Solution version subfolder: v{version_number}
+- Terraform Cloud workspace: {solution-name-as-in-subfolder}-{dev/prod}
+- Doppler project: {solution-name-as-in-subfolder}
+- Github Doppler secret: DOPPLER_{solution-name-as-in-subfolder}_{dev/prod} (Github secrets do not accept '-' so we replace any '-' with '_')
 
 
 ## Quick Start
@@ -71,9 +70,9 @@ Inputs for provision.yml:
 .
 ├── .github/
 │   └── workflows/
-│       └── provision.yml        # Manual deployment workflow
+│       └── provision.yml        # Manual deploy solution workflow
 │       └── destroy.yml          # Manual destroy solution workflow
-├── modules/                     # Reusable, shared modules (2 levels shown)
+├── modules/                     # Reusable, shared modules
 │   ├── security/
 │   │   └── firewall/
 │   │       └── main.tf
