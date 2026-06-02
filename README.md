@@ -28,7 +28,7 @@ Uses Terraform Cloud for state management and Doppler for secrets management.
 
 #### 1. Doppler Setup
 - Create a Doppler project with proper name
-- create service tokens for dev and prod environments
+- create service tokens for dev and prod environments and add them as DOPPLER_TOKEN_DEV and DOPPLER_TOKEN_PROD secrets
 - Its important to name doppler secrets properly:
 -- for instance TF_VAR prefix -> automatically picked as terraform variables
 -- for instance TERRAFORM_CLOUD_ORGANIZATION -> automatically picked as terraform provider organization (required)
