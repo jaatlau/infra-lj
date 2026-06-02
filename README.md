@@ -52,9 +52,8 @@ Deployment occurs using provision.yml workflow file.
 Inputs for provision.yml:
 - environment {dev/prod} - required
 - name of the solution (subfolder) - required
+
 ```
-
-
 ## How It Works
 
 1. **Developer** manually triggers the provision workflow
@@ -66,11 +65,10 @@ Inputs for provision.yml:
 
 ## Directory Structure
 
-```
 .
 ├── .github/
 │   └── workflows/
-│       └── provision.yml        # Manual deploy solution workflow
+│       └── provision.yml        # Manual deploy workflow
 │       └── destroy.yml          # Manual destroy solution workflow
 ├── modules/                     # Reusable, shared modules
 │   ├── security/
@@ -86,4 +84,5 @@ Inputs for provision.yml:
     └── <solution-name>/
         ├── main.tf
         └── variables.tf
+
 ```
