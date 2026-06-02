@@ -1,7 +1,8 @@
 # TODO
 
 # v001
-- [] fix the relative path problem for main.tf for stacks!!
+- [] destroy solution file, make it work!
+- [x] fix the relative path problem for main.tf for stacks!!
 - [x] stackable requires that workflow files should take the input of name of the stack that you want to deploy or destroy
 - [x] add Destroy yml
 - [x] Make repository stackable, meaning that each solution (like this data platform) is in its own subfolder. check chatgpt discussion terraform hetzner setup issues as solution
