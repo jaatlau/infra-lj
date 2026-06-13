@@ -25,8 +25,9 @@ Hosts data platform in hetzner cloud environment
 ### Deployment flow
 - Run provision.yml as explained in project root readme.md
 - Copy the bootstrap.sh file to server:
-```
-scp -i ~/.ssh/<SSH_KEY_NAME> ./bootstrap.sh root@<REMOTE_SERVER_IP>:/root/ # replace <SSH_KEY_NAME> and <REMOTE_SERVER_IP>, local ssh key file name that you created and remote server ip found from output of provision for instance, respectively.
+```bash
+# replace <SSH_KEY_NAME> and <REMOTE_SERVER_IP>, local ssh key file name that you created and remote server ip found from output of provision for instance, respectively.
+scp -i ~/.ssh/<SSH_KEY_NAME> ./bootstrap.sh root@<REMOTE_SERVER_IP>:/root/ 
 ```
 
 - Run the bootstrap.sh via SSH to install the following services:
@@ -34,8 +35,9 @@ scp -i ~/.ssh/<SSH_KEY_NAME> ./bootstrap.sh root@<REMOTE_SERVER_IP>:/root/ # rep
 -- Docker
 -- Tailscale
 ```bash
+# replace <SSH_KEY_NAME> and <REMOTE_SERVER_IP> and <DOPPLER_TOKEN>, local ssh key file name that you created and remote server ip found from output of provision for instance and doppler token defined in your solution doppler project, respectively.
 ssh -i ~/.ssh/<SSH_KEY_NAME> root@<REMOTE_SERVER_IP> \
-  "chmod +x /root/bootstrap.sh && /root/bootstrap.sh <DOPPLER_TOKEN>" # replace <SSH_KEY_NAME> and <REMOTE_SERVER_IP> and <DOPPLER_TOKEN>, local ssh key file name that you created and remote server ip found from output of provision for instance and doppler token defined in your solution doppler project, respectively.
+  chmod +x /root/bootstrap.sh && /root/bootstrap.sh <DOPPLER_TOKEN>
 ```
 
 
