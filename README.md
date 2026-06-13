@@ -4,7 +4,7 @@ Central infrastructure repository that provisions and manages global infrastruct
 Uses Terraform Cloud for state management and Doppler for secrets management.
 
 ## Guidelines
-- Each stacks/ subfolder is deployable solution.
+- Each stacks/ subfolder is a deployable solution.
 
 - Each solution points to same global Terraform Cloud organization and organization's default project.
 
