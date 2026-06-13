@@ -16,15 +16,12 @@ Hosts data platform in hetzner cloud environment
 ## Deployment
 
 ### Prerequisites
-- Hetzner account
+- Hetzner account, Hetzner project, Hetzner api token saved as Doppler secret (look from variables.tf how to name the secret)
+- Locally created ssh key, public key content saved as Doppler secret (look from variables.tf how to name the secret)
+- Check rest of the variables.tf variables and add them as Doppler secrets
+- Locally installed Tailscale, authkey created, authkey saved as Doppler secret (TAILSCALE_AUTHKEY)
 
 ### Deployment flow
-- Create Hetzner project
-- Inside project create api token
-- Save api token as Doppler secret
-- Locally, create ssh key and save public key content as Doppler secret
-- check required list of variables from variables.tf and add them to Doppler
-
 - Run provision.yml as explained in project root readme.md
 - Copy the bootstrap.sh file to server:
 ```
