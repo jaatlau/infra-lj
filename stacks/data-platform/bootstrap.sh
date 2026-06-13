@@ -65,7 +65,6 @@ echo "[3/4] Bringing node up..."
 
 tailscale up \
   --authkey="${TAILSCALE_AUTHKEY}" \
-  --hostname="${TAILSCALE_HOSTNAME}" \
   --accept-routes \
   --accept-dns=false
 

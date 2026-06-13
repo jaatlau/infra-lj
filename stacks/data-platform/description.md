@@ -6,7 +6,8 @@ Hosts data platform in hetzner cloud environment
 ## Components
 - 1x Hetzner server
     - Hetzner firewall rules "default"
-    - Docker & Docker CLI
+    - Docker
+    - Doppler CLI
     - Tailscale
     - MiniIO (raw data)
     - Postgres (database)
@@ -25,7 +26,7 @@ Hosts data platform in hetzner cloud environment
 - Run provision.yml as explained in project root readme.md
 - Copy the bootstrap.sh file to server:
 ```
-scp -i ~/.ssh/<SSH_KEY_NAME> ./bootsrap.sh root@<REMOTE_SERVER_IP>:/root/ # replace <SSH_KEY_NAME> and <REMOTE_SERVER_IP>, local ssh key file name that you created and remote server ip found from output of provision for instance, respectively.
+scp -i ~/.ssh/<SSH_KEY_NAME> ./bootstrap.sh root@<REMOTE_SERVER_IP>:/root/ # replace <SSH_KEY_NAME> and <REMOTE_SERVER_IP>, local ssh key file name that you created and remote server ip found from output of provision for instance, respectively.
 ```
 
 - Run the bootstrap.sh via SSH to install the following services:
