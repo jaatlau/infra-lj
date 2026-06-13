@@ -5,9 +5,13 @@ Uses Terraform Cloud for state management and Doppler for secrets management.
 
 ## Guidelines
 - Each stacks/ subfolder is deployable solution.
+
 - Each solution points to same global Terraform Cloud organization and organization's default project.
+
 - Each solution should have its own Terraform Cloud workspace for dev and prod environments.
+
 - When creating Terraform Cloud workspaces, remember to add working directory setting to solution subfolder (e.g. stacks/data-platform), otherwise relative paths to modules sources wont work
+
 - Each solution should have its own Doppler project.
 
 
