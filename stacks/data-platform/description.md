@@ -9,7 +9,7 @@ Hosts data platform in hetzner cloud environment
     - Docker
     - Doppler CLI
     - Tailscale
-    - MiniIO (raw data)
+    - Seaweedfs (raw data)
     - Postgres (database)
 - 1x Hetzner SSH key
 
@@ -17,10 +17,14 @@ Hosts data platform in hetzner cloud environment
 ## Deployment
 
 ### Prerequisites
-- Hetzner account, Hetzner project, Hetzner api token saved as Doppler secret (look from variables.tf how to name the secret)
-- Locally created ssh key, public key content saved as Doppler secret (look from variables.tf how to name the secret)
-- Check rest of the variables.tf variables and add them as Doppler secrets
-- Locally installed Tailscale, authkey created, authkey saved as Doppler secret (TAILSCALE_AUTHKEY)
+- Hetzner account, Hetzner project, Hetzner api token generated (server hosted here)
+- Locally generated ssh key (to access initially to the server)
+- Locally installed Tailscale, and authkey generated (bind your local dev machine to remote host to securely access only from your local machine)
+- variables to add to Doppler:
+  - variables.tf file variables (with prefix of TF_VAR_)
+  - TAILSCALE_AUTHKEY
+  - SEAWEEDFS_AWS_ACCESS_KEY_ID
+  - SEAWEEDFS_AWS_SECRET_ACCESS_KEY
 
 ### Deployment flow
 - Run provision.yml as explained in project root readme.md
@@ -34,6 +38,7 @@ scp -i ~/.ssh/<SSH_KEY_NAME> ./bootstrap.sh root@<REMOTE_SERVER_IP>:/root/
 -- Doppler CLI
 -- Docker
 -- Tailscale
+-- SeaweedFS
 ```bash
 # replace <SSH_KEY_NAME> and <REMOTE_SERVER_IP> and <DOPPLER_TOKEN>, local ssh key file name that you created and remote server ip found from output of provision for instance and doppler token defined in your solution doppler project, respectively.
 ssh -i ~/.ssh/<SSH_KEY_NAME> root@<REMOTE_SERVER_IP> \

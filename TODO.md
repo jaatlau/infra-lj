@@ -3,9 +3,8 @@
 # v002
 - [x] Check opencode 
 - [x] Check all bootstrap stuff that is required for data platform (CONTINUE FROM creating data-platform bootstrap.sh and check chatgippity for automated tailscale script)
-- [] Build simple visualisation tool where you type command "ilj describe <solution_name>" and then it describes visually of what that solution lookslike. Should this be in some other repo?
-- []  Install miniIO via Docker? So that we can start working on the data platform, and add it to bootstrap.sh
-- [] Install Postgres via Docker? So that we can start working on the data platform, and add it to bootstrap.sh
+- [x]  Install SeaweedFS
+- [] Test seaweedFS
 
 
 
