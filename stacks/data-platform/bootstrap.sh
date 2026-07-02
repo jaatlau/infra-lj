@@ -56,7 +56,7 @@ TAILSCALE_AUTHKEY=$(doppler secrets get TAILSCALE_AUTHKEY --plain --token="$DOPP
 SEAWEEDFS_AWS_ACCESS_KEY_ID=$(doppler secrets get SEAWEEDFS_AWS_ACCESS_KEY_ID --plain --token="$DOPPLER_TOKEN")
 SEAWEEDFS_AWS_SECRET_ACCESS_KEY=$(doppler secrets get SEAWEEDFS_AWS_SECRET_ACCESS_KEY --plain --token="$DOPPLER_TOKEN")
 
-if [ -z "$TAILSCALE_AUTHKEY" || -z "$SEAWEEDFS_AWS_ACCESS_KEY_ID" || -z "$SEAWEEDFS_AWS_SECRET_ACCESS_KEY"  ]; then
+if [ -z "$TAILSCALE_AUTHKEY" ] || [ -z "$SEAWEEDFS_AWS_ACCESS_KEY_ID" ] || [ -z "$SEAWEEDFS_AWS_SECRET_ACCESS_KEY" ]; then
     echo "❌ Missing required secrets in Doppler: TAILSCALE_AUTHKEY, SEAWEEDFS_AWS_ACCESS_KEY_ID, SEAWEEDFS_AWS_SECRET_ACCESS_KEY"
     exit 1
 fi
@@ -86,6 +86,8 @@ echo "[4/4] Status"
 
 tailscale status
 tailscale ip -4
+
+TAILSCALE_IP=$(tailscale ip -4 | head -1)
 
 echo "Tailscale setup complete."
 
@@ -140,8 +142,8 @@ ExecStart=/usr/local/bin/weed server \
   -dir=\${SEAWEEDFS_DATA_DIR} \
   -s3 \
   -s3.port=8333 \
-  -s3.config=/dev/null \
-  -ip=0.0.0.0
+  -filer \
+  -ip=${TAILSCALE_IP}
 Restart=always
 RestartSec=5
 LimitNOFILE=65535
